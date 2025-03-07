@@ -17,7 +17,12 @@ public class ArrayListQueue2<E> implements Queue2<E> {
 
     @Override
     public boolean add(E e) throws FailedOperationException {
+        if(e == null) {
+            throw new NullPointerException();
+        }
+
         boolean success = this.queue.add(e);
+
         if (!success) {
             throw new FailedOperationException("Failed to add element to queue");
         }
