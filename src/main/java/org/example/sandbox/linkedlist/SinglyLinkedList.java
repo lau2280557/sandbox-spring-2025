@@ -29,7 +29,7 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
     public void addLast(E element) {
         Node node = new Node(element, null);
 
-        if (head == null) {
+        if (tail == null) {
             head = node;
             tail = node;
         } else {
