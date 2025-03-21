@@ -7,8 +7,6 @@ public class SingleDriver {
         LinkedList<String> linkedList = new SinglyLinkedList<>();
 
         linkedList.addFirst("first");
-        System.out.println(linkedList);
-
         linkedList.addFirst("second");
         linkedList.addFirst("third");
         linkedList.addFirst("fourth");
@@ -18,6 +16,20 @@ public class SingleDriver {
         linkedList.addLast("eighth");
 
         System.out.println(linkedList);
+
+        linkedList.pollFirst();
+
+        System.out.println(linkedList);
+
+        System.out.println(linkedList.contains("fifth"));
+        System.out.println(linkedList.contains("fourth"));
+
+        System.out.println("Size: " + linkedList.size());
+        linkedList.clear();
+        System.out.println("Size: " + linkedList.size());
+
+        System.out.println(linkedList.contains("fifth"));
+        System.out.println(linkedList.contains("fourth"));
 
     }
 }

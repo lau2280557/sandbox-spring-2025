@@ -1,72 +1,60 @@
 package org.example.sandbox.linkedlist;
 
-
 import java.util.StringJoiner;
 
-public class SinglyLinkedList<E> implements LinkedList<E> {
+public class DoublyLinkedList<E> implements LinkedList<E> {
 
     private Node head;
     private Node tail;
-    private int size;
 
-    public SinglyLinkedList() {
+    public DoublyLinkedList() {
         head = null;
         tail = null;
-        size = 0;
     }
 
     @Override
     public void addFirst(E element) {
 
-        Node node = new Node(element, head); // 1,2
+        Node node = new Node(element, head, null);
 
-        if(head == null) { // 3
+        if (head == null) {
             head = node;
-            tail = node;
+            tail = head;
         } else {
+            head.previous = node;
             head = node;
         }
-
-        size++;
 
     }
 
     @Override
     public void addLast(E element) {
 
-        Node node = new Node(element, null); // 1,2
+        Node node = new Node(element, null, tail);
+        tail.next = node;
+        tail = node;
 
-        if (tail == null) {
-            tail = node;
-            head = node;
-        } else {
-            tail.next = node; // 3
-            tail = node; // 4
-        }
-
-        size++;
     }
 
     @Override
     public E pollFirst() {
 
         E element;
-
         if (head == null) {
-            element = null; // 1
+            element = null;
         } else {
 
-            element = head.element;  // 1
+            element = head.element;
 
-            if (head == tail) { // 4
+            if (head == tail) {
                 head = null;
                 tail = null;
             } else {
-                Node next = head.next; // 2
-                head.next = null; // 3
-                head = next; // 4
+                Node next = head.next;
+                head.next = null;
+                head = next;
+                head.previous = null;
             }
-        size--;
         }
 
         return element;
@@ -79,47 +67,30 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
         if (tail == null) {
             element = null;
         } else {
-             element = tail.element; // 1
 
-            if (head == tail) { // 3
+            element = tail.element;
+
+            if (head == tail) {
                 head = null;
                 tail = null;
             } else {
-                Node current = head;
-                Node previous = head;
-                while (current.next != null) {
-                    previous = current; // 2
-                    current = current.next; // 2
-                }
-                tail = previous; // 3
-                tail.next = null; // 4
+                Node newTail = tail.previous;
+                tail.previous = null;
+                newTail.next = null;
+                tail = newTail;
             }
-            size--;
         }
-
         return element;
     }
 
     @Override
     public E peekFirst() {
-        E element;
-        if (head == null) {
-            element = null;
-        } else {
-            element = head.element;
-        }
-        return element;
+        return head.element;
     }
 
     @Override
     public E peekLast() {
-        E element;
-        if (tail == null) {
-            element = null;
-        } else {
-            element = tail.element;
-        }
-        return element;
+        return tail.element;
     }
 
     @Override
@@ -127,43 +98,55 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
 
         Node current = head;
         while (current.next != null) {
+
             Node next = current.next;
-            current.next = null; // break links
+            current.next = null;
             current = next;
         }
 
         head = null;
         tail = null;
-        size = 0;
     }
 
     @Override
     public boolean contains(E element) {
 
         boolean contains = false;
-
         Node current = head;
         while (current != null) {
-            if (current.element.equals(element)) {
+            Node next = current.next;
+            if (current.element == element) {
                 contains = true;
                 break;
             }
-            current = current.next;
+            current = next;
         }
-
         return contains;
     }
 
     @Override
     public int size() {
-        return this.size;
+
+        int counter = 0;
+        if (head != null) {
+
+            if(head == tail) {
+                counter = 1;
+            } else {
+                Node current = head;
+                while(current != null){
+                    counter++;
+                    current = current.next;
+                }
+            }
+        }
+        return counter;
     }
 
-    @Override
     public String toString() {
+
         StringBuilder builder = new StringBuilder("[");
         StringJoiner joiner = new StringJoiner(", ");
-
         Node current = head;
         if (current != null) {
 
@@ -172,20 +155,39 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
                 current = current.next;
             }
         }
+        builder.append(joiner.toString());
+        builder.append("]");
+        return builder.toString();
+    }
+
+    public String reverseToString() {
+
+        StringBuilder builder = new StringBuilder("[");
+        StringJoiner joiner = new StringJoiner(", ");
+        Node current = tail;
+        if (current != null) {
+
+            while (current != null) {
+                joiner.add(current.element.toString());
+                current = current.previous;
+            }
+        }
         builder.append(joiner);
         builder.append("]");
         return builder.toString();
     }
 
-
     private class Node {
 
         E element;
         Node next;
+        Node previous;
 
-        public Node(E element, Node next) {
+        public Node(E element, Node next, Node previous) {
             this.element = element;
             this.next = next;
+            this.previous = previous;
         }
+
     }
 }
