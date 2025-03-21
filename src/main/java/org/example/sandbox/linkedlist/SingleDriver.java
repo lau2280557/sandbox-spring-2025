@@ -5,18 +5,21 @@ public class SingleDriver {
         LinkedList<String> linkedList = new SinglyLinkedList<>();
 
         linkedList.addFirst("first");
-        //System.out.println(linkedList);
 
         linkedList.addFirst("second");
         linkedList.addFirst("third");
         linkedList.addFirst("fourth");
         linkedList.addFirst("fifth");
 
-        //System.out.println(linkedList);
-
         linkedList.addLast("sixth");
         linkedList.addLast("seventh");
 
+        System.out.println("Size " + linkedList.size());
+
+        linkedList.pollFirst();
         System.out.println(linkedList);
+
+        linkedList.clear();
+        System.out.println("Size " + linkedList.size());
     }
 }
