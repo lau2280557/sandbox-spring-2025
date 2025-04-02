@@ -1,32 +1,31 @@
 package org.example.sandbox.recursion.fibonacci;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Fibonacci {
 
-    public static Map<Integer, Integer> map = new HashMap<>();
-
+    //2^n is the worst-case time complexity
     public static int fibonacci(int n) {
         if (n <= 1) {
             return n;
         }
-        return memo(n - 1) + memo(n - 2);
+        return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
-    private static int memo(int n) {
-
+    //use memoization to reduce time complexity to O(n)
+    public static int fibonacciMemoization(int n, int[] memo) {
         if (n <= 1) {
             return n;
         }
-
-        if (map.containsKey(n)) {
-            return map.get(n);
+        if (memo[n] == 0) {
+            memo[n] = fibonacciMemoization(n - 1, memo) + fibonacciMemoization(n - 2, memo);
         }
+        return memo[n];
+    }
 
-        int fib = memo(n - 1) + memo(n - 2);
-        map.put(n, fib);
+    public static void main(String[] args) {
+        int n = 10;
+        System.out.println("Fibonacci of " + n + " is " + fibonacci(n));
 
-        return fib;
+        int[] memo = new int[n + 1];
+        System.out.println("Fibonacci of " + n + " is " + fibonacciMemoization(n, memo));
     }
 }
