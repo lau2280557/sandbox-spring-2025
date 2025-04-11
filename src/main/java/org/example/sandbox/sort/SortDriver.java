@@ -27,16 +27,16 @@ public class SortDriver {
         printFirstTenOfArray(copy1);
 
         System.out.println("\nInsertion Sort...");
-        //SortUtility.insertionSort(copy2);
-        //printFirstTenOfArray(copy2);
+        SortUtility.insertionSort(copy2);
+        printFirstTenOfArray(copy2);
 
         System.out.println("\nBubble Sort...");
-        //SortUtility.bubbleSort(copy3);
-        //printFirstTenOfArray(copy3);
+        SortUtility.bubbleSort(copy3);
+        printFirstTenOfArray(copy3);
 
         System.out.println("\nQuick Sort...");
-        //SortUtility.quickSort(copy4);
-        //printFirstTenOfArray(copy4);
+        SortUtility.quickSort(copy4);
+        printFirstTenOfArray(copy4);
 
         System.out.println("\nMerge Sort...");
         //SortUtility.mergeSort(copy5);

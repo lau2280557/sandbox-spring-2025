@@ -6,6 +6,7 @@ public class SortUtility {
         // Prevent instantiation
     }
 
+    // O(n^2)
     public static <T extends Comparable<T>> void selectionSort(T[] data) {
 
         int min;
@@ -33,6 +34,73 @@ public class SortUtility {
         T temp = data[min];
         data[min] = data[index];
         data[index] = temp;
+    }
+
+    // O(n^2)
+    public static <T extends Comparable<T>> void insertionSort(T[] data) {
+
+        for (int index = 1; index < data.length; index++) {
+
+            T key = data[index];
+            int position = index;
+
+            // shift larger values to the right
+            while (position > 0 && data[position - 1].compareTo(key) > 0) {
+                data[position] = data[position - 1];
+                position--;
+            }
+
+            data[position] = key;
+
+        }
+    }
+
+    // O(n^2)
+    public static <T extends Comparable<T>> void bubbleSort(T[] data) {
+
+        int position, scan;
+
+        for (position = data.length - 1; position >= 0; position--) {
+
+            for (scan = 0; scan <= position - 1; scan++) {
+                if (data[scan].compareTo(data[scan + 1]) > 0) {
+                    swap(data, scan, scan + 1);
+                }
+            }
+        }
+    }
+
+    public static <T extends Comparable<T>> void quickSort(T[] data) {
+        quickSort(data, 0, data.length - 1);
+    }
+
+    private static <T extends Comparable<T>> void quickSort(T[] data, int min, int max) {
+        if (min < max) {
+            int pivotIndex = partition(data, min, max);
+            quickSort(data, min, pivotIndex - 1);
+            quickSort(data, pivotIndex + 1, max);
+        }
+    }
+
+    private static <T extends Comparable<T>> int partition(T[] data, int min, int max) {
+
+        T pivot = data[min];
+        int left = min + 1;
+        int right = max;
+
+        while (left <= right) {
+            while (left <= right && data[left].compareTo(pivot) <= 0) {
+                left++;
+            }
+            while (left <= right && data[right].compareTo(pivot) >= 0) {
+                right--;
+            }
+            if (left < right) {
+                swap(data, left, right);
+            }
+        }
+        swap(data, min, right);
+        return right;
     }
 
 }
