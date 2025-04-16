@@ -39,7 +39,7 @@ public class SortDriver {
         printFirstTenOfArray(copy4);
 
         System.out.println("\nMerge Sort...");
-        //SortUtility.mergeSort(copy5);
+        SortUtility.mergeSort(copy5);
         //printFirstTenOfArray(copy5);
 
     }
